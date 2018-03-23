@@ -9,6 +9,17 @@ namespace Generate_Users_and_Leads
 {
     class Program
     {
+
+        public static string statetxtfilepath = string.Empty;
+        public static string leadstxtfilepathoutput = string.Empty;
+        public static string userstxtfilepathoutput = string.Empty;
+        public static string nounstxtpath = string.Empty;
+        public static string businessoutputpath = string.Empty;
+        public static string firstnamestxtpath = string.Empty;
+        public static string lastnamestxtpath = string.Empty;
+        public static string phonetxtpath = string.Empty;
+
+
         static void Main(string[] args)
         {
             Console.WriteLine("Press enter to generate insert statements.");
@@ -24,6 +35,7 @@ namespace Generate_Users_and_Leads
         }
 
 
+
         private static void GenerateLeads(string[] firstnames, string[] lastnames,string[] phonenumbers)
         {
             Random ranNamesAndPhone = new Random();
@@ -31,7 +43,7 @@ namespace Generate_Users_and_Leads
             List<Lead> leads = new List<Lead>();
             string rawstates = string.Empty;
 
-            using (StreamReader sr = new StreamReader(@"C:\Users\Bobby\Desktop\seedfiles\states.txt"))
+            using (StreamReader sr = new StreamReader(statetxtfilepath))
             {
                 rawstates = sr.ReadToEnd();
             }
@@ -67,7 +79,7 @@ namespace Generate_Users_and_Leads
 
                 });
             }
-            using (StreamWriter sw = new StreamWriter(@"C:\Users\Bobby\Desktop\seedfiles\leadsforinsert.txt"))
+            using (StreamWriter sw = new StreamWriter(leadstxtfilepathoutput))
             {
                 foreach (var item in leads)
                 {
@@ -102,7 +114,7 @@ namespace Generate_Users_and_Leads
                 });
             }
 
-            using(StreamWriter sw = new StreamWriter(@"C:\Users\Bobby\Desktop\seedfiles\usersforinsert.txt"))
+            using(StreamWriter sw = new StreamWriter(userstxtfilepathoutput))
             {
                 foreach(var item in users)
                 {
@@ -113,6 +125,8 @@ namespace Generate_Users_and_Leads
 
         }
 
+        
+
         private static void GetBusinessNames(string[] firstnames, string[] lastnames, string[] phonenums)
         {
             Random randomNounPicker = new Random();
@@ -122,16 +136,16 @@ namespace Generate_Users_and_Leads
             string rawnames = string.Empty;
             string rawstates = string.Empty;
 
-            if (!File.Exists(@"C:\Users\Bobby\Desktop\seedfiles\nouns.txt"))
+            if (!File.Exists(nounstxtpath))
             {
-                File.Create(@"C:\Users\Bobby\Desktop\seedfiles\nouns.txt");
+                File.Create(nounstxtpath);
             }
 
-            using (StreamReader sr = new StreamReader(@"C:\Users\Bobby\Desktop\seedfiles\nouns.txt"))
+            using (StreamReader sr = new StreamReader(nounstxtpath))
             {
                 rawnames = sr.ReadToEnd();
             }
-            using(StreamReader sr = new StreamReader(@"C:\Users\Bobby\Desktop\seedfiles\states.txt"))
+            using(StreamReader sr = new StreamReader(statetxtfilepath))
             {
                 rawstates = sr.ReadToEnd();
             }
@@ -167,7 +181,9 @@ namespace Generate_Users_and_Leads
             }
 
 
-            using (StreamWriter sw = new StreamWriter(@"C:\Users\Bobby\Desktop\seedfiles\businessesforinsert.txt"))
+            
+
+            using (StreamWriter sw = new StreamWriter(businessoutputpath))
             {
                 foreach (var item in businesses)
                 {
@@ -179,7 +195,7 @@ namespace Generate_Users_and_Leads
         private static string[] GetFirstNames()
         {
             string rawnames = string.Empty;
-            using(StreamReader sr =  new StreamReader(@"C:\Users\Bobby\Desktop\seedfiles\firstnames.txt"))
+            using(StreamReader sr =  new StreamReader(firstnamestxtpath))
             {
                 rawnames = sr.ReadToEnd();
             }
@@ -190,7 +206,7 @@ namespace Generate_Users_and_Leads
         private static string[] GetLastNames()
         {
             string rawnames = string.Empty;
-            using (StreamReader sr = new StreamReader(@"C:\Users\Bobby\Desktop\seedfiles\lastnames.txt"))
+            using (StreamReader sr = new StreamReader(lastnamestxtpath))
             {
                 rawnames = sr.ReadToEnd();
             }
@@ -201,7 +217,7 @@ namespace Generate_Users_and_Leads
         private static string[] GetPhoneNumbers()
         {
             string rawnumbers = string.Empty;
-            using (StreamReader sr = new StreamReader(@"C:\Users\Bobby\Desktop\seedfiles\phonenumbers.txt"))
+            using (StreamReader sr = new StreamReader(phonetxtpath))
             {
                 rawnumbers = sr.ReadToEnd();
             }
@@ -221,7 +237,7 @@ namespace Generate_Users_and_Leads
                 numbers = numbers + rangen.Next(1000000000,2000000000) + ',';
             }
 
-            using(StreamWriter sw = new StreamWriter(@"C:\Users\Bobby\Desktop\seedfiles\phonenumbers.txt"))
+            using(StreamWriter sw = new StreamWriter(phonetxtpath))
             {
                 sw.Write(numbers);
             }
